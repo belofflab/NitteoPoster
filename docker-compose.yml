@@ -14,19 +14,19 @@ services:
     depends_on: 
       - db
 
-  db:
-    image: postgres:13.3
-    environment:
-      POSTGRES_DB: "store"
-      POSTGRES_USER: "konstantin"
-      POSTGRES_PASSWORD: "kali"
-    ports:
-      - "5432:5432"
-    restart: unless-stopped
-    networks:
-      - app-network
-    volumes: 
-      - db:/var/lib/postgresql/data
+  # db:
+  #   image: postgres:13.3
+  #   environment:
+  #     POSTGRES_DB: "store"
+  #     POSTGRES_USER: "konstantin"
+  #     POSTGRES_PASSWORD: "kali"
+  #   ports:
+  #     - "5432:5432"
+  #   restart: unless-stopped
+  #   networks:
+  #     - app-network
+  #   volumes: 
+  #     - db:/var/lib/postgresql/data
 
 networks:
   app-network:
