@@ -11,30 +11,20 @@ services:
       - "8005:8000"
     networks:
       - app-network
-    # depends_on: 
-    #   - db
 
-  # db:
-  #   image: postgres:13.3
-  #   environment:
-  #     POSTGRES_DB: "store"
-  #     POSTGRES_USER: "konstantin"
-  #     POSTGRES_PASSWORD: "kali"
-  #   ports:
-  #     - "5432:5432"
-  #   restart: unless-stopped
-  #   networks:
-  #     - app-network
-  #   volumes: 
-  #     - db:/var/lib/postgresql/data
+  db:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "store"
+      POSTGRES_USER: "konstantin"
+      POSTGRES_PASSWORD: "kali"
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    networks:
+      - app-network
+
 
 networks:
   app-network:
     driver: bridge
-
-
-volumes:
-  db:
-    driver: local
-  app:
-    driver: local

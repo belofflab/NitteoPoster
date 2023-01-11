@@ -2,19 +2,15 @@ FROM python:3.8
 
 WORKDIR /opt/backend
 
-RUN python3 -m pip install virtualenv 
-RUN python3 -m virtualenv /opt/backend/venv
 
-COPY backend/pyproject.toml ./poetry.lock* /opt/backend/
+COPY backend/requirements.txt /opt/backend/
 
-RUN /opt/backend/venv/bin/pip install poetry
+RUN pip3 install -r requirements.txt
 
-RUN /opt/backend/venv/bin/poetry config virtualenvs.create false
-RUN /opt/backend/venv/bin/poetry install --no-dev --no-root
-
-COPY backend /opt/backend
+COPY backend /opt/backend/
 
 
-CMD ["/opt/backend/venv/bin/poetry", "run", "fastapi-app"]
+
+CMD ["python3", "main.py", "--host", "0.0.0.0", "--port", "8000"]
 
 EXPOSE 8000
