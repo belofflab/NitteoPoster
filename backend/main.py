@@ -21,7 +21,7 @@ def setup_database(application):
     db.init_app(application, dict(dsn=DATABASE_URL))
 
 def setup_app(application):
-    setup_database(application)
+    # setup_database(application)
     setup_routes(application)
 
 def setup_cors(application: web.Application):
@@ -40,7 +40,14 @@ def setup_cors(application: web.Application):
 if __name__ == '__main__':
     from database.connection import db
     args = parser.parse_args()
-    app = web.Application(middlewares=[db, JWTMiddleware(
+    # app = web.Application(middlewares=[db, JWTMiddleware(
+    #         SECRET_KEY, algorithms='HS256',
+    #         whitelist=[r"/public*"],
+    #         credentials_required=False,
+    #         )
+    #     ]
+    # )
+    app = web.Application(middlewares=[JWTMiddleware(
             SECRET_KEY, algorithms='HS256',
             whitelist=[r"/public*"],
             credentials_required=False,
