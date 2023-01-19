@@ -37,8 +37,9 @@ class DBManager:
     def get_all_napobmens(self):
             """Получение доступных обменов"""
             self.connection.cur.execute(f"""SELECT * FROM {self.prefix}_napobmens""")
-            for el in self.connection.cur:
-              print(self.get_valuts(el[1]))
+            napobmens = [el for el in self.connection.cur]
+            for napobmen in napobmens:
+              print([el for el in self.get_valuts(napobmen[1])])
               # print(self.get_valuts(el[1]))
             # return [{
             #           'valsid_1': self.get_valuts(el[1]),
