@@ -26,5 +26,5 @@ class DBManager:
     
     def get_parser_pairs(self, title_birg):
         """Получение доступных обменов"""
-        self.connection.cur.execute(f"""SELECT * FROM {self.prefix}_parser_pairs WHERE title_birg = {title_birg}""")
+        self.connection.cur.execute(f"""SELECT * FROM {self.prefix}_parser_pairs WHERE title_birg = {str(title_birg)}""")
         return [el for el in self.connection.cur]
