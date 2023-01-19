@@ -1,10 +1,10 @@
 from aiogram import Bot
 
 
-BOT_TOKEN = ''
-CHAT_ID = ''
+BOT_TOKEN = '5759038625:AAGeKrBxcT-_fLUa4-D3yx22dhP2Ik6ZOv8'
+CHAT_ID = -883474105
 
-bot = Bot(token='token')
+bot = Bot(token=BOT_TOKEN)
 
 
 
