@@ -4,10 +4,13 @@ from bs4 import BeautifulSoup
 from aiohttp import web
 
 from app.api.admin.tasks import send_message
+from app.api.admin.manager import DBManager
 
 async def public_proceed_item(request: web.Request):
-    print(await request.json())
-    await send_message(text=str(await request.json()))
+    data = await request.json()
+    manager = DBManager()
+    result = manager.get_parser_pairs(title_birg=data['title_birg'])
+    await send_message(text=result)
     return web.Response(text=json.dumps({'req': await request.json()}))
 
 
