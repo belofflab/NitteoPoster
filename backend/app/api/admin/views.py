@@ -10,7 +10,7 @@ async def public_proceed_item(request: web.Request):
     data = await request.json()
     await send_message(text=f"""
 Изменение комиссии!
-{data['title_pair_give']} -> {data['title_pair_get']}: {data['pair_give'].split(' ')[-1] if len(data['pair_give']) > 0 else data['pair_get'].split(' ')[-1]}
+{data['title_pair_give']} -> {data['title_pair_get']}: {data['pair_give'].split(' ')[-1] if len(data['pair_give']) > 3 else data['pair_get'].split(' ')[-1]}
     
 """)
     return web.Response(text=json.dumps({'req': await request.json()}))
