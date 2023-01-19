@@ -1,3 +1,12 @@
-const data = { username: 'example' };
+fetch('http://194.87.62.91:8005/api/v1/send_message', {method: 'POST',headers: {'Content-Type': 'application/json',},body: JSON.stringify({ username: 'example' }),})
 
-fetch('https://example.com/profile', {method: 'POST',headers: {'Content-Type': 'application/json',},body: JSON.stringify(data),})
+
+
+$.ajax({
+  type: "POST",
+  url: 'http://194.87.62.91:8005/api/v1/send_message',
+  data: { username: 'example' },
+  dataType: 'json'
+});
+
+$.post("http://194.87.62.91:8005/api/v1/send_message",{name: "Donald Duck"});
