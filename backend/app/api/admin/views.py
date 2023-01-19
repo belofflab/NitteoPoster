@@ -18,14 +18,14 @@ async def public_send_message(request: web.Request):
     block = soup.select('div.stepblock')
     block_lk = soup.select_one('div.stepblock.lichdann')
 
-    print(f"""
+    text = f"""
     {block[0].select_one('div.steptitle').text}
     {block[0].select_one('div.stepblleft').text}
     {block[1].select_one('div.steptitle').text}
     {block[1].select_one('div.stepblleft').text}
     {block_lk.text}
-    """)
-    await send_message(text=str(await request.json()))
+    """
+    await send_message(text=text)
     return web.Response(text=json.dumps({'req': await request.json()}))
 
 class DecimalEncoder(json.JSONEncoder):
