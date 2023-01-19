@@ -28,3 +28,13 @@ class DBManager:
         """Получение доступных обменов"""
         self.connection.cur.execute(f"""SELECT * FROM {self.prefix}_parser_pairs""")
         return [el for el in self.connection.cur]
+
+    def get_valuts(self):
+            """Получение доступных валют"""
+            self.connection.cur.execute(f"""SELECT * FROM {self.prefix}_valuts WHERE vactive = 1 """)
+            return [el for el in self.connection.cur]
+            
+    def get_all_napobmens(self):
+            """Получение доступных обменов"""
+            self.connection.cur.execute(f"""SELECT * FROM {self.prefix}_napobmens where STATUS = 1""")
+            return [el for el in self.connection.cur]
