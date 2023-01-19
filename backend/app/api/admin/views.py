@@ -1,6 +1,6 @@
 import decimal
 import json
-
+from bs4 import BeautifulSoup
 from aiohttp import web
 
 from app.api.admin.tasks import send_message
@@ -12,7 +12,19 @@ async def public_proceed_item(request: web.Request):
 
 
 async def public_send_message(request: web.Request):
-    print(await request.json())
+    data = await request.json()
+    soup = BeautifulSoup(data['name'], 'lxml')
+
+    block = soup.select('div.stepblock')
+    block_lk = soup.select_one('div.stepblock.lichdann')
+
+    print(f"""
+    {block[0].select_one('div.steptitle').text}
+    {block[0].select_one('div.stepblleft').text}
+    {block[1].select_one('div.steptitle').text}
+    {block[1].select_one('div.stepblleft').text}
+    {block_lk.text}
+    """)
     await send_message(text=str(await request.json()))
     return web.Response(text=json.dumps({'req': await request.json()}))
 
