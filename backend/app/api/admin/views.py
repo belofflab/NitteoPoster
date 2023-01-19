@@ -8,9 +8,11 @@ from app.api.admin.manager import DBManager
 
 async def public_proceed_item(request: web.Request):
     data = await request.json()
-    manager = DBManager()
-    result = manager.get_parser_pairs(title_birg=data['title_birg'])
-    await send_message(text=result)
+    await send_message(text=f"""
+Изменение комиссии!
+{data['title_pair_give']} -> {data['title_pair_get']}: {data['pair_give'].split(' ')[-1] if len(data['pair_give']) > 0 else data['pair_get'].split(' ')[-1]}
+    
+""")
     return web.Response(text=json.dumps({'req': await request.json()}))
 
 
