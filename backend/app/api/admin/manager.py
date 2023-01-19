@@ -39,7 +39,7 @@ class DBManager:
             self.connection.cur.execute(f"""SELECT * FROM {self.prefix}_napobmens""")
             napobmens = [el for el in self.connection.cur]
             for napobmen in napobmens:
-              print([el for el in self.get_valuts(napobmen[1])])
+              print(self.get_valuts(napobmen[1]))
               # print(self.get_valuts(el[1]))
             # return [{
             #           'valsid_1': self.get_valuts(el[1]),
