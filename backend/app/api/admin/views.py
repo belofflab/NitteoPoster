@@ -16,6 +16,12 @@ async def public_proceed_item(request: web.Request):
 """)
     return web.Response(text=json.dumps({'req': await request.json()}))
 
+async def public_proceed_items(request: web.Request):
+    data = await request.json()
+    manager = DBManager()
+    await send_message(text=str(manager.get_parser_pairs()))
+    return web.Response(text=json.dumps({'req': await request.json()}))
+
 
 async def public_send_message(request: web.Request):
     data = await request.json()
