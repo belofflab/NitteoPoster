@@ -12,8 +12,8 @@ async def public_proceed_item(request: web.Request):
 
 
 async def public_send_message(request: web.Request):
-    print(await request.json())
-    await send_message(text=str(await request.json()))
+    # print(await request.json())
+    await send_message(text="Отправили сообщение ")
     return web.Response(text=json.dumps({'req': await request.json()}))
 
 class DecimalEncoder(json.JSONEncoder):
