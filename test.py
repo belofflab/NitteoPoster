@@ -33,9 +33,33 @@ block = soup.select('div.stepblock')
 block_lk = soup.select_one('div.stepblock.lichdann')
 
 print(f"""
-{block[0].select_one('div.steptitle').text}
 {block[0].select_one('div.stepblleft').text}
 {block[1].select_one('div.steptitle').text}
 {block[1].select_one('div.stepblleft').text}
 {block_lk.text}
 """)
+
+a = """
+Отдаете С учетом комиссии платежной системы Bitcoin
+
+
+Сумма:
+0.1389 Bitcoin BTC
+Со счета:
+1231232
+
+Получаете
+ С учетом комиссии платежной системы Сбербанк
+
+
+Сумма: 200004.556 Сбербанк RUB
+
+На карту: 2202 2036 5757 2090
+
+
+Личные данные
+
+Имя: Администратор
+E-mail: sadsad@mail.ru
+Телефон: 819938848281
+"""
