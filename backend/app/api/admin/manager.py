@@ -38,11 +38,8 @@ class DBManager:
             """Получение доступных обменов"""
             self.connection.cur.execute(f"""SELECT * FROM {self.prefix}_napobmens WHERE status = 1""")
             napobmens = [el for el in self.connection.cur]
+            text = "\n".join([f"{self.get_valuts(napobmen[1])[4]} -> {self.get_valuts(napobmen[2])[4]} {napobmen[3] if napobmen[3] != '1' else napobmen[4]}" for napobmen in napobmens])
             for napobmen in napobmens:
-              print(self.get_valuts(napobmen[1]))
-              # print(self.get_valuts(el[1]))
-            # return [{
-            #           'valsid_1': self.get_valuts(el[1]),
-            #           'valsid_2': self.get_valuts(el[2]),
-            #           'course': el[3] if el[3] != '1' else el[4]
-            #           } for el in self.connection.cur]
+              print(self.get_valuts(napobmen[1])[4])
+              print(self.get_valuts(napobmen[2])[4])
+            return text

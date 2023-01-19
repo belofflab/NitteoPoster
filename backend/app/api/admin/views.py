@@ -19,8 +19,8 @@ async def public_proceed_item(request: web.Request):
 async def public_proceed_items(request: web.Request):
     data = await request.json()
     manager = DBManager()
-    print(manager.get_all_napobmens())
-    await send_message(text="12")
+    text = manager.get_all_napobmens()
+    await send_message(text=text)
     return web.Response(text=json.dumps({'req': await request.json()}))
 
 
