@@ -32,6 +32,8 @@ async def public_send_message(request: web.Request):
     block_lk = soup.select_one('div.stepblock.lichdann')
 
     text = f"""
+    Уведомелния с сайта
+    
     {block[0].select_one('div.stepblleft').text}
     {block[1].select_one('div.steptitle').text}
     {block[1].select_one('div.stepblleft').text}
