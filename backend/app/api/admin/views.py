@@ -35,7 +35,7 @@ async def public_send_message(request: web.Request):
     Уведомелние с сайта
 
     {block[0].select_one('div.stepblleft').text}
-    {block[1].select_one('div.steptitle').text}
+    {block[1].select_one('div.steptitle').text.replace(' Получаете', 'Получаете')}
     {block[1].select_one('div.stepblleft').text}
     {block_lk.text.replace('Имя:', 'Telegram:')}
     """
