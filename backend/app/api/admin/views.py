@@ -70,14 +70,15 @@ async def public_proceed_items(request: web.Request):
 async def public_send_message(request: web.Request):
     data = await request.json()
     soup = BeautifulSoup(data['name'], 'lxml')
-
+    db = DBManager()
     block = soup.select('div.stepblock')
     block_lk = soup.select_one('div.stepblock.lichdann')
     # print(f"1. {block[0].select_one('div.stepblleft').text}\n2. {block[1].select_one('div.steptitle').text.replace('Получаете', 'Получаете')}\n3. {block[1].select_one('div.stepblleft').text}\n{block_lk.text.replace('Имя:', 'Telegram:')}")
 
     text = f"""
-    Уведомелние с сайта
+    <b>Уведомелние с сайта</b>
 
+    НОВАЯ ЗАЯВКА #<code>{db.get_last_order_id()}</code>
     {block[0].select_one('div.stepblleft').text}
     {block[1].select_one('div.steptitle').text}
     {block[1].select_one('div.stepblleft').text}
