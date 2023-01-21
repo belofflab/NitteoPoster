@@ -72,12 +72,15 @@ async def public_send_message(request: web.Request):
 
     block = soup.select('div.stepblock')
     block_lk = soup.select_one('div.stepblock.lichdann')
+    # print(f"1. {block[0].select_one('div.stepblleft').text}\n2. {block[1].select_one('div.steptitle').text.replace('Получаете', 'Получаете')}\n3. {block[1].select_one('div.stepblleft').text}\n{block_lk.text.replace('Имя:', 'Telegram:')}")
 
     text = f"""
+    Уведомелние с сайта
+
     {block[0].select_one('div.stepblleft').text}
     {block[1].select_one('div.steptitle').text}
     {block[1].select_one('div.stepblleft').text}
-    {block_lk.text}
+    {block_lk.text.replace('Имя:', 'Telegram:')}
     """
     await send_message(text=text)
     return web.Response(text=json.dumps({'req': await request.json()}))
