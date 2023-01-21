@@ -63,7 +63,7 @@ async def public_proceed_items(request: web.Request):
     data = await request.json()
     # manager = DBManager()
     # text = manager.get_all_napobmens()
-    await send_message(text=await send_shablon())
+    await send_shablon(text=await make_shablon())
     return web.Response(text=json.dumps({'req': await request.json()}))
 
 
