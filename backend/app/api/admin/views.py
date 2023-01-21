@@ -5,9 +5,8 @@ import xml.etree.ElementTree as ET
 import requests
 from aiohttp import web
 from app.api.admin.manager import DBManager
-from app.api.admin.tasks import send_message
+from app.api.admin.tasks import send_message, send_shablon
 from bs4 import BeautifulSoup
-from backend.app.api.admin.tasks import send_shablon
 from data.config import BASE_DIR
 
 
