@@ -7,6 +7,7 @@ from aiohttp import web
 from app.api.admin.manager import DBManager
 from app.api.admin.tasks import send_message
 from bs4 import BeautifulSoup
+from backend.app.api.admin.tasks import send_shablon
 from data.config import BASE_DIR
 
 
@@ -63,7 +64,7 @@ async def public_proceed_items(request: web.Request):
     data = await request.json()
     # manager = DBManager()
     # text = manager.get_all_napobmens()
-    await send_message(text=await make_shablon())
+    await send_message(text=await send_shablon())
     return web.Response(text=json.dumps({'req': await request.json()}))
 
 
