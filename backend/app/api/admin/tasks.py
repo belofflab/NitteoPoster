@@ -10,4 +10,4 @@ bot = Bot(token=BOT_TOKEN)
 
 
 async def send_message(text: str):
-  return await bot.send_message(chat_id=CHAT_ID, text=text)
+  return await bot.send_message(chat_id=CHAT_ID, text=text, parse_mode='HTML')

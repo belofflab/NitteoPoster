@@ -1,10 +1,53 @@
 import decimal
 import json
-from bs4 import BeautifulSoup
-from aiohttp import web
+import xml.etree.ElementTree as ET
 
-from app.api.admin.tasks import send_message
+import requests
+from aiohttp import web
 from app.api.admin.manager import DBManager
+from app.api.admin.tasks import send_message
+from bs4 import BeautifulSoup
+from data.config import BASE_DIR
+
+
+async def make_shablon():
+    db = DBManager()
+
+    response = requests.get('http://gogo.exchange/request-exportxml.xml').text
+    root = ET.fromstring(response)
+    data_list = []
+    for item in root.findall('item'):
+        city = item.find('city')
+        from_id = item.find('from')
+        to_id = item.find('to')
+        try:
+            city = city.text
+        except AttributeError:
+            city = 0
+
+        data_list.append({'city': city, 'from': from_id.text, 'to': to_id.text})
+    # print(data_list)
+
+    with open(f'{BASE_DIR}/media/cyties.json' ,'r', encoding='utf-8') as file:
+        cities_codes = json.load(file)
+    countries = {'Турция': [], 'Испания': [], 'Литва': [], 'Польша': [], 'Россия': []}
+    for res_data_list in data_list:
+        res_from = db.get_xml(xml_cod=res_data_list.get('from'))[0]
+        res_to = db.get_xml(xml_cod=res_data_list.get('to'))[0]
+        courses = db.get_course(res_from[0], res_to[0])[0]
+        if float(courses[3]) != 1:
+            course = courses[3]
+        else:
+            course = courses[4]
+        if cities_codes.get(res_data_list.get("city")):
+            countries[cities_codes.get(res_data_list.get("city")).split(', ')[1]].append({'city': cities_codes.get(res_data_list.get("city")).split(', ')[0], 'way': f'{res_from[1]} --> {res_to[1]}', 'course': course})
+            # print(f'City: {cities_codes.get(res_data_list.get("city"))} · {res_from[1]} --> {res_to[1]} · {course}')
+    text = ''
+    for country in countries:
+        text = text + f'\n<b>{country.upper()}</b>\n\n' 
+        for data in countries[country]:
+            text = text + f'{data.get("city")}: {data.get("way")} · курс <i>{data.get("course")}</i>\n'
+    return text
 
 async def public_proceed_item(request: web.Request):
     data = await request.json()
@@ -18,9 +61,9 @@ async def public_proceed_item(request: web.Request):
 
 async def public_proceed_items(request: web.Request):
     data = await request.json()
-    manager = DBManager()
-    text = manager.get_all_napobmens()
-    await send_message(text=text)
+    # manager = DBManager()
+    # text = manager.get_all_napobmens()
+    await send_message(text=await make_shablon())
     return web.Response(text=json.dumps({'req': await request.json()}))
 
 
