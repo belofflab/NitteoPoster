@@ -7,6 +7,7 @@ from aiohttp import web
 from app.api.admin.manager import DBManager
 from app.api.admin.tasks import send_message
 from bs4 import BeautifulSoup
+from data.config import BASE_DIR
 
 
 async def make_shablon():
@@ -27,7 +28,7 @@ async def make_shablon():
         data_list.append({'city': city, 'from': from_id.text, 'to': to_id.text})
     # print(data_list)
 
-    with open('./cyties.json' ,'r', encoding='utf-8') as file:
+    with open(f'{BASE_DIR}/media/cyties.json' ,'r', encoding='utf-8') as file:
         cities_codes = json.load(file)
     countries = {'Турция': [], 'Испания': [], 'Литва': [], 'Польша': [], 'Россия': []}
     for res_data_list in data_list:
