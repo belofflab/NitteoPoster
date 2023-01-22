@@ -84,6 +84,7 @@ async def public_send_message(request: web.Request):
     {block[1].select_one('div.stepblleft').text}
     {block_lk.text.replace('Имя:', 'Telegram:')}
     """
+    print(text)
     await send_message(text=text)
     return web.Response(text=json.dumps({'req': await request.json()}))
 
