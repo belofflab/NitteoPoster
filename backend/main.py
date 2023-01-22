@@ -4,7 +4,7 @@ import aiohttp_cors
 from aiohttp import web
 from aiohttp_jwt import JWTMiddleware
 
-from data.config import DATABASE_URL, SECRET_KEY 
+from data.config import SECRET_KEY 
 
 
 parser = argparse.ArgumentParser()
@@ -16,9 +16,6 @@ def setup_routes(application):
     from app.api.admin.routes import setup_api_routes
     setup_api_routes(application)
     setup_cors(application)
-
-def setup_database(application):
-    db.init_app(application, dict(dsn=DATABASE_URL))
 
 def setup_app(application):
     setup_routes(application)
@@ -37,7 +34,6 @@ def setup_cors(application: web.Application):
 
 
 if __name__ == '__main__':
-    from database.connection import db
     args = parser.parse_args()
     app = web.Application(middlewares=[JWTMiddleware(
             SECRET_KEY, algorithms='HS256',
