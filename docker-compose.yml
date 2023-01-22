@@ -12,18 +12,6 @@ services:
     networks:
       - app-network
 
-  db:
-    image: postgres:13.3
-    environment:
-      POSTGRES_DB: "store"
-      POSTGRES_USER: "konstantin"
-      POSTGRES_PASSWORD: "kali"
-    ports:
-      - "5433:5432"
-    restart: unless-stopped
-    networks:
-      - app-network
-
 
 networks:
   app-network:

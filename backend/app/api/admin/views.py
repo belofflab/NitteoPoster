@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 import requests
 from aiohttp import web
 from app.api.admin.manager import DBManager
-from app.api.admin.tasks import send_message, send_shablon
+from app.api.admin.tasks import send_message
 from bs4 import BeautifulSoup
 from data.config import BASE_DIR
 
@@ -26,7 +26,6 @@ async def make_shablon():
             city = 0
 
         data_list.append({'city': city, 'from': from_id.text, 'to': to_id.text})
-    # print(data_list)
 
     with open(f'{BASE_DIR}/media/cyties.json' ,'r', encoding='utf-8') as file:
         cities_codes = json.load(file)
@@ -41,7 +40,6 @@ async def make_shablon():
             course = courses[4]
         if cities_codes.get(res_data_list.get("city")):
             countries[cities_codes.get(res_data_list.get("city")).split(', ')[1]].append({'city': cities_codes.get(res_data_list.get("city")).split(', ')[0], 'way': f'{res_from[1]} --> {res_to[1]}', 'course': course})
-            # print(f'City: {cities_codes.get(res_data_list.get("city"))} · {res_from[1]} --> {res_to[1]} · {course}')
     text = ''
     for country in countries:
         text = text + f'\n<b>{country.upper()}</b>\n\n' 
@@ -60,16 +58,12 @@ async def public_proceed_item(request: web.Request):
     return web.Response(text=json.dumps({'req': await request.json()}))
 
 async def public_proceed_items(request: web.Request):
-    data = await request.json()
-    # manager = DBManager()
-    # text = manager.get_all_napobmens()
-    await send_shablon(text=await make_shablon())
+    await send_message(text=await make_shablon())
     return web.Response(text=json.dumps({'req': await request.json()}))
 
 
 async def public_send_message(request: web.Request):
     data = await request.json()
-    print(data)
     soup = BeautifulSoup(data['name'], 'lxml')
     db = DBManager()
     block = soup.select('div.stepblock')
@@ -84,7 +78,6 @@ async def public_send_message(request: web.Request):
     {block[1].select_one('div.stepblleft').text}
     {block_lk.text.replace('Имя:', 'Telegram:')}
     """
-    print(text)
     await send_message(text=text)
     return web.Response(text=json.dumps({'req': await request.json()}))
 
