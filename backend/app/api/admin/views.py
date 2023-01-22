@@ -8,7 +8,7 @@ from app.api.admin.manager import DBManager
 from bs4 import BeautifulSoup
 from data.config import BASE_DIR
 
-from backend.app.api.admin.tasks import (send_message_orders,
+from app.api.admin.tasks import (send_message_orders,
                                          send_message_own_com,
                                          send_message_shablon)
 
