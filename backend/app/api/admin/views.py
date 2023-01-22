@@ -5,22 +5,12 @@ import xml.etree.ElementTree as ET
 import requests
 from aiohttp import web
 from app.api.admin.manager import DBManager
-from app.api.admin.tasks import send_message
-from bs4 import BeautifulSoup
-from backend.app.api.admin.tasks import send_message_orders, send_message_own_com, send_message_shablon
-from data.config import BASE_DIR
-
-
-import decimal
-import json
-import xml.etree.ElementTree as ET
-
-import requests
-from aiohttp import web
-from app.api.admin.manager import DBManager
-from app.api.admin.tasks import send_message_orders, send_message_own_com
 from bs4 import BeautifulSoup
 from data.config import BASE_DIR
+
+from backend.app.api.admin.tasks import (send_message_orders,
+                                         send_message_own_com,
+                                         send_message_shablon)
 
 
 async def make_shablon():
