@@ -54,7 +54,8 @@ async def public_proceed_items(request: web.Request):
 
 async def public_send_message(request: web.Request):
     data = await request.json()
-    soup = BeautifulSoup(data['name'], 'lxml')
+    print(data['body'])
+    soup = BeautifulSoup(data['body'], 'lxml')
     db = DBManager()
     block = soup.select('div.stepblock')
     block_lk = soup.select_one('div.stepblock.lichdann')
