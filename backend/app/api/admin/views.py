@@ -59,20 +59,20 @@ async def public_send_message(request: web.Request):
     block = soup.select('div.stepblock')
     block_lk = soup.select_one('div.stepblock.lichdann')
     text_wrapper = """
-<b>Уведомелние с сайта</b>
+<b>Уведомление с сайта</b>
 
 НОВАЯ ЗАЯВКА #<code>{}</code> 
 {}
         """
     text = text_wrapper.format(db.get_last_order_id(), "\n".join([i.text for i in soup.select('div.wootdaeteblock')]) + soup.select_one('div.woveddann').text if soup.select_one('div.woveddann') is not None else '')
     if len(block):
-        parsed_text = f"""
-{block[0].select_one('div.stepblleft').text}
-{block[1].select_one('div.steptitle').text}
-{block[1].select_one('div.stepblleft').text}
-{block_lk.text.replace('Имя:', 'Telegram:')}
-        """
-        text = text_wrapper.format(db.get_last_order_id(), parsed_text)
+#         parsed_text = f"""
+# {block[0].select_one('div.stepblleft').text}
+# {block[1].select_one('div.steptitle').text}
+# {block[1].select_one('div.stepblleft').text}
+# {block_lk.text.replace('Имя:', 'Telegram:')}
+#         """
+        text = text_wrapper.format(db.get_last_order_id(), "\n".join([i.text for i in soup.select('div.stepblock')]) + soup.select_one('div.stepblock.lichdann').text if soup.select_one('div.stepblock.lichdann') is not None else '')
     await send_message(text=text)
     return web.Response(text=json.dumps({'req': await request.json()}))
 
