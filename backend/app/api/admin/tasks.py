@@ -6,7 +6,7 @@ bot = Bot(token=BOT_TOKEN)
 
 
 async def send_message_shablon(text: str):
-  return await bot.send_message(chat_id=OERDERS, text=text, parse_mode='HTML')
+  return await bot.send_message(chat_id=CHANGE_OWN_COMMISSION, text=text, parse_mode='HTML')
 
 async def send_message_orders(text: str):
   return await bot.send_message(chat_id=OERDERS, text=text, parse_mode='HTML')
