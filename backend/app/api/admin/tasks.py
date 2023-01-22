@@ -1,7 +1,7 @@
 from aiogram import Bot
 
 from data.config import BOT_TOKEN, CHAT_ID
-print(BOT_TOKEN, CHAT_ID)
+
 bot = Bot(token=BOT_TOKEN)
 
 
