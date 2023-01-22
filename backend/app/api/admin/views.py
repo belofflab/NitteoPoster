@@ -66,7 +66,7 @@ async def public_send_message(request: web.Request):
         {}
         """
 
-    if block is not None:
+    if block_lk is not None:
         parsed_text = f"""
         {block[0].select_one('div.stepblleft').text}
         {block[1].select_one('div.steptitle').text}
