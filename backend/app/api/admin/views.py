@@ -47,16 +47,6 @@ async def make_shablon():
             text = text + f'{data.get("city")}: {data.get("way")} · курс <i>{data.get("course")}</i>\n'
     return text
 
-async def public_proceed_item(request: web.Request):
-    data = await request.json()
-    await send_message(text=f"""
-Изменение комиссии!
-
-{data['title_pair_give']} -> {data['title_pair_get']}: {data['pair_give'].split(' ')[-1] if len(data['pair_give']) > 3 else data['pair_get'].split(' ')[-1]}%
-    
-""")
-    return web.Response(text=json.dumps({'req': await request.json()}))
-
 async def public_proceed_items(request: web.Request):
     await send_message(text=await make_shablon())
     return web.Response(text=json.dumps({'req': await request.json()}))
@@ -86,3 +76,25 @@ class DecimalEncoder(json.JSONEncoder):
         if isinstance(o, decimal.Decimal):
             return str(o)
         return super(DecimalEncoder, self).default(o)
+
+
+
+
+
+
+
+
+
+
+
+
+
+# async def public_proceed_item(request: web.Request):
+#     data = await request.json()
+#     await send_message(text=f"""
+# Изменение комиссии!
+
+# {data['title_pair_give']} -> {data['title_pair_get']}: {data['pair_give'].split(' ')[-1] if len(data['pair_give']) > 3 else data['pair_get'].split(' ')[-1]}%
+    
+# """)
+#     return web.Response(text=json.dumps({'req': await request.json()}))
