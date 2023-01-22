@@ -5,8 +5,6 @@ from data.config import BOT_TOKEN, COMMISSIONS, OERDERS, CHANGE_OWN_COMMISSION
 bot = Bot(token=BOT_TOKEN)
 
 
-async def send_message(text: str):
-  return await bot.send_message(chat_id=CHAT_ID, text=text, parse_mode='HTML')
 
 async def send_message_shablon(text: str):
   return await bot.send_message(chat_id=OERDERS, text=text, parse_mode='HTML')
