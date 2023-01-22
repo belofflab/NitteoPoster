@@ -15,5 +15,3 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 CHAT_ID = int(os.getenv('CHAT_ID')) # -1001714792398
 
-print(CHAT_ID)
-
