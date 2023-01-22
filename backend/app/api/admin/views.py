@@ -7,7 +7,19 @@ from aiohttp import web
 from app.api.admin.manager import DBManager
 from app.api.admin.tasks import send_message
 from bs4 import BeautifulSoup
-from backend.app.api.admin.tasks import send_message_orders, send_message_own_com
+from backend.app.api.admin.tasks import send_message_orders, send_message_own_com, send_message_shablon
+from data.config import BASE_DIR
+
+
+import decimal
+import json
+import xml.etree.ElementTree as ET
+
+import requests
+from aiohttp import web
+from app.api.admin.manager import DBManager
+from app.api.admin.tasks import send_message_orders, send_message_own_com
+from bs4 import BeautifulSoup
 from data.config import BASE_DIR
 
 
@@ -49,7 +61,7 @@ async def make_shablon():
     return text
 
 async def public_proceed_items(request: web.Request):
-    await send_message(text=await make_shablon())
+    await send_message_shablon(text=await make_shablon())
     return web.Response(text=json.dumps({'status': 'ok'}))
 
 
@@ -82,18 +94,6 @@ class DecimalEncoder(json.JSONEncoder):
         if isinstance(o, decimal.Decimal):
             return str(o)
         return super(DecimalEncoder, self).default(o)
-
-
-
-
-
-
-
-
-
-
-
-
 
 async def public_proceed_own_commission(request: web.Request):
     data = await request.json()
