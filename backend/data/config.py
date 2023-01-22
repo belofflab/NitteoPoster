@@ -13,5 +13,6 @@ if os.path.exists(ENV_FILE):
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 BOT_TOKEN = os.getenv('BOT_TOKEN')
-CHAT_ID = int(os.getenv('CHAT_ID')) 
-
+COMMISSIONS = int(os.getenv('COMMISSIONS')) 
+OERDERS = int(os.getenv('OERDERS'))
+CHANGE_OWN_COMMISSION = int(os.getenv('CHANGE_OWN_COMMISSION'))

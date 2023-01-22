@@ -7,6 +7,7 @@ from aiohttp import web
 from app.api.admin.manager import DBManager
 from app.api.admin.tasks import send_message
 from bs4 import BeautifulSoup
+from backend.app.api.admin.tasks import send_message_orders, send_message_own_com
 from data.config import BASE_DIR
 
 
@@ -73,7 +74,7 @@ async def public_send_message(request: web.Request):
 {block_lk.text}
         """
         text = text_wrapper.format(db.get_last_order_id(), parsed_text)
-    await send_message(text=text.replace('Имя:', 'Telegram:'))
+    await send_message_orders(text=text.replace('Имя:', 'Telegram:'))
     return web.Response(text=json.dumps({'req': await request.json()}))
 
 class DecimalEncoder(json.JSONEncoder):
@@ -94,12 +95,12 @@ class DecimalEncoder(json.JSONEncoder):
 
 
 
-# async def public_proceed_item(request: web.Request):
-#     data = await request.json()
-#     await send_message(text=f"""
-# Изменение комиссии!
+async def public_proceed_own_commission(request: web.Request):
+    data = await request.json()
+    await send_message_own_com(text=f"""
+Изменение комиссии!
 
-# {data['title_pair_give']} -> {data['title_pair_get']}: {data['pair_give'].split(' ')[-1] if len(data['pair_give']) > 3 else data['pair_get'].split(' ')[-1]}%
+{data['title_pair_give']} -> {data['title_pair_get']}: {data['pair_give'].split(' ')[-1] if len(data['pair_give']) > 3 else data['pair_get'].split(' ')[-1]}%
     
-# """)
-#     return web.Response(text=json.dumps({'req': await request.json()}))
+""")
+    return web.Response(text=json.dumps({'req': await request.json()}))
