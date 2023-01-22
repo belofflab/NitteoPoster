@@ -33,7 +33,7 @@ async def make_shablon():
         data_list.append({'city': city, 'from': from_id.text, 'to': to_id.text})
     # print(data_list)
 
-    with open('cyties.json' ,'r', encoding='utf-8') as file:
+    with open(f'{BASE_DIR}/media/cyties.json' ,'r', encoding='utf-8') as file:
         cities_codes = json.load(file)
     countries = {'Турция': [], 'Испания': [], 'Литва': [], 'Польша': [], 'Россия': []}
     for res_data_list in data_list:
