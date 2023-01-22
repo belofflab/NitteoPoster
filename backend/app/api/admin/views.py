@@ -48,6 +48,7 @@ async def make_shablon():
     return text
 
 async def public_proceed_items(request: web.Request):
+    print('1211111')
     await send_message(text=await make_shablon())
     return web.Response(text=json.dumps({'req': await request.json()}))
 
