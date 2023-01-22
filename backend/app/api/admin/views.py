@@ -54,7 +54,6 @@ async def public_proceed_items(request: web.Request):
 
 async def public_send_message(request: web.Request):
     data = await request.json()
-    print(data['body'])
     soup = BeautifulSoup(data['body'], 'lxml')
     db = DBManager()
     block = soup.select('div.stepblock')
@@ -65,8 +64,8 @@ async def public_send_message(request: web.Request):
         НОВАЯ ЗАЯВКА #<code>{}</code> 
         {}
         """
-
-    if block_lk is not None:
+    text = text_wrapper.format(db.get_last_order_id(), "".join([i.text for i in soup.select('div.wootdaeteblock')]))
+    if len(block):
         parsed_text = f"""
         {block[0].select_one('div.stepblleft').text}
         {block[1].select_one('div.steptitle').text}
@@ -74,7 +73,6 @@ async def public_send_message(request: web.Request):
         {block_lk.text.replace('Имя:', 'Telegram:')}
         """
         text = text_wrapper.format(db.get_last_order_id(), parsed_text)
-    text = text_wrapper.format(db.get_last_order_id(), "".join([i.text for i in soup.select('div.wootdaeteblock')]))
     await send_message(text=text)
     return web.Response(text=json.dumps({'req': await request.json()}))
 
