@@ -15,7 +15,7 @@ from app.api.admin.tasks import (send_message_orders,
 
 async def make_shablon():
     db = DBManager()
-
+    without_city = ['SBERRUB', 'TCSBRUB', 'ACRUB']
     response = requests.get('http://gogo.exchange/request-exportxml.xml').text
     root = ET.fromstring(response)
     data_list = []
@@ -27,10 +27,13 @@ async def make_shablon():
             city = city.text
         except AttributeError:
             city = 0
-
+        
+        if from_id.text in without_city or to_id.text in without_city:
+            city = 'INSIDERUSSIA'
         data_list.append({'city': city, 'from': from_id.text, 'to': to_id.text})
+    # print(data_list)
 
-    with open(f'{BASE_DIR}/media/cyties.json' ,'r', encoding='utf-8') as file:
+    with open('cyties.json' ,'r', encoding='utf-8') as file:
         cities_codes = json.load(file)
     countries = {'Турция': [], 'Испания': [], 'Литва': [], 'Польша': [], 'Россия': []}
     for res_data_list in data_list:
@@ -43,6 +46,7 @@ async def make_shablon():
             course = courses[4]
         if cities_codes.get(res_data_list.get("city")):
             countries[cities_codes.get(res_data_list.get("city")).split(', ')[1]].append({'city': cities_codes.get(res_data_list.get("city")).split(', ')[0], 'way': f'{res_from[1]} --> {res_to[1]}', 'course': course})
+            # print(f'City: {cities_codes.get(res_data_list.get("city"))} · {res_from[1]} --> {res_to[1]} · {course}')
     text = ''
     for country in countries:
         text = text + f'\n<b>{country.upper()}</b>\n\n' 
