@@ -59,16 +59,22 @@ async def public_send_message(request: web.Request):
     db = DBManager()
     block = soup.select('div.stepblock')
     block_lk = soup.select_one('div.stepblock.lichdann')
+    text_wrapper = """
+        <b>Уведомелние с сайта</b>
 
-    text = f"""
-    <b>Уведомелние с сайта</b>
+        НОВАЯ ЗАЯВКА #<code>{}</code> 
+        {}
+        """
 
-    НОВАЯ ЗАЯВКА #<code>{db.get_last_order_id()}</code>
-    {block[0].select_one('div.stepblleft').text}
-    {block[1].select_one('div.steptitle').text}
-    {block[1].select_one('div.stepblleft').text}
-    {block_lk.text.replace('Имя:', 'Telegram:')}
-    """
+    if block is not None:
+        parsed_text = f"""
+        {block[0].select_one('div.stepblleft').text}
+        {block[1].select_one('div.steptitle').text}
+        {block[1].select_one('div.stepblleft').text}
+        {block_lk.text.replace('Имя:', 'Telegram:')}
+        """
+        text = text_wrapper.format(db.get_last_order_id(), parsed_text)
+    text = text_wrapper.format(db.get_last_order_id(), "".join([i.text for i in soup.select('div.wootdaeteblock')]))
     await send_message(text=text)
     return web.Response(text=json.dumps({'req': await request.json()}))
 
